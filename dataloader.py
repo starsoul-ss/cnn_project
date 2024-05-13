@@ -8,7 +8,7 @@ class CustomImageDataset(Dataset):
     def __init__(self, annotations_file, img_dir, transform=None):
         """
         初始化函数
-        :param annotations_file: CSV文件路径，包含图像名称和标签
+        :param annotations_file: CSV文件路径,包含图像名称和标签
         :param img_dir: 图像存储的目录
         :param transform: 进行的预处理函数
         """
@@ -38,6 +38,8 @@ class CustomImageDataset(Dataset):
 # 注意：可以根据需要添加更多的数据增强
 transform = transforms.Compose([
     transforms.Resize((150, 150)),  # 确认所有图像都是150x150
+    transforms.RandomHorizontalFlip(),  # 随机水平翻转
+    transforms.RandomRotation(15),      # 随机旋转±15度
     transforms.ToTensor(),  # 将图像转换为torch.Tensor
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # 标准化，使用imagenet的均值和标准差
 ])
@@ -46,8 +48,3 @@ transform = transforms.Compose([
 def create_dataloader(csv_file, img_dir, batch_size=32, shuffle=True, transform=transform):#shuffle=True表示每个epoch都打乱数据
     dataset = CustomImageDataset(annotations_file=csv_file, img_dir=img_dir, transform=transform)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
-
-# 使用例子
-train_loader = create_dataloader('data/train_data.csv', 'data/imgs', batch_size=32, shuffle=True,transform=transform)
-val_loader = create_dataloader('data/val_data.csv', 'data/imgs', batch_size=32, shuffle=False,transform=transform)
-test_loader = create_dataloader('data/test_data.csv', 'data/imgs', batch_size=32, shuffle=False,transform=transform)

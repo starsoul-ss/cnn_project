@@ -26,6 +26,8 @@ model = CNN(num_classes).to(device)
 # 损失函数和优化器
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=1, verbose=True)
+
 
 # 定义验证函数
 def validate(model, val_loader, criterion, device):
@@ -82,10 +84,14 @@ def train(model, train_loader, val_loader, criterion, optimizer, num_epochs):
         if patience_counter >= 3:
             print("触发早停")
             break
+        scheduler.step(val_loss)  # 根据验证损失调整学习率
+        current_lr = scheduler.get_last_lr()[0]
+        print(f'Current Learning Rate: {current_lr}')
+        
 
 # 开始训练和验证
 train(model, train_loader, val_loader, criterion, optimizer, num_epochs)
 
 # 保存模型
-torch.save(model.state_dict(), 'model.pth')
+torch.save(model.state_dict(), 'model2.pth')
 print('Model saved to model.pth')
