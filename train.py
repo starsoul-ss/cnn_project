@@ -8,6 +8,7 @@ from model import CNN
 
 # 设置设备
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f'Using device {device}')
 
 # 配置参数
 num_classes = 6
@@ -46,6 +47,8 @@ def validate(model, val_loader, criterion, device):
 
 # 训练模型
 def train(model, train_loader, val_loader, criterion, optimizer, num_epochs):
+    best_val_loss = float('inf')
+    patience_counter = 0
     for epoch in range(num_epochs):
         model.train()
         total_train_loss = 0
@@ -70,6 +73,15 @@ def train(model, train_loader, val_loader, criterion, optimizer, num_epochs):
         # 在每个epoch后进行验证
         val_loss, val_accuracy = validate(model, val_loader, criterion, device)
         print(f'Epoch [{epoch+1}/{num_epochs}]: Train Loss: {total_train_loss / len(train_loader):.4f}, Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.4f}')
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), 'best_model.pth')  # 保存最佳模型
+            patience_counter = 0  # 重置耐心计数器
+        else:
+            patience_counter += 1  # 耐心计数器递增
+        if patience_counter >= 3:
+            print("触发早停")
+            break
 
 # 开始训练和验证
 train(model, train_loader, val_loader, criterion, optimizer, num_epochs)
