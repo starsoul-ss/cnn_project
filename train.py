@@ -81,7 +81,7 @@ def train(model, train_loader, val_loader, criterion, optimizer, num_epochs):
             patience_counter = 0  # 重置耐心计数器
         else:
             patience_counter += 1  # 耐心计数器递增
-        if patience_counter >= 3:
+        if patience_counter >= 4:
             print("触发早停")
             break
         scheduler.step(val_loss)  # 根据验证损失调整学习率

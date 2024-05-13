@@ -118,3 +118,54 @@ Classification Report:
 weighted avg       0.86      0.86      0.86      3407
 
 train 9
+Epoch [15/25]: Train Loss: 0.3745, Validation Loss: 0.4421, Validation Accuracy: 0.8401
+增加dropout，与上一个模型效果相差不大，可能是数据预处理带来的数据增强让额外的正则化不会产生太大影响
+Test Loss: 0.4457, Test Accuracy: 0.8453
+Confusion Matrix:
+[[410  10  11  17  24  76]
+ [  3 539   0   8   0   0]
+ [  5   5 479  59  45   6]
+ [  1   2  72 479  40   0]
+ [  2   4  24  32 487   5]
+ [ 37  20   4   5  10 486]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.90      0.75      0.82       548
+           1       0.93      0.98      0.95       550
+           2       0.81      0.80      0.81       599
+           3       0.80      0.81      0.80       594
+           4       0.80      0.88      0.84       554
+           5       0.85      0.86      0.86       562
+
+    accuracy                           0.85      3407
+   macro avg       0.85      0.85      0.85      3407
+weighted avg       0.85      0.85      0.84      3407
+
+train 10
+Epoch [21/25]: Train Loss: 0.2307, Validation Loss: 0.4013, Validation Accuracy: 0.8712
+将卷积层之后的dropout删除，只保留全连接层之间的dropout，效果有改进
+Test Loss: 0.3903, Test Accuracy: 0.8694
+Confusion Matrix:
+[[459   5   7  10  18  49]
+ [  6 534   1   6   0   3]
+ [  9   3 488  59  33   7]
+ [  4   1  57 500  30   2]
+ [  9   0  19  29 490   7]
+ [ 51   6   4   4   6 491]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.85      0.84      0.85       548
+           1       0.97      0.97      0.97       550
+           2       0.85      0.81      0.83       599
+           3       0.82      0.84      0.83       594
+           4       0.85      0.88      0.87       554
+           5       0.88      0.87      0.88       562
+
+    accuracy                           0.87      3407
+   macro avg       0.87      0.87      0.87      3407
+weighted avg       0.87      0.87      0.87      3407
+
+grad-cam进行决策可视化
+选择不同分类标签下的hot图，选择了200，395，757，5319，6897，16175六种
