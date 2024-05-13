@@ -47,10 +47,10 @@ model = CNN(num_classes=6).to(device)
 model.load_state_dict(torch.load('model2.pth', map_location=device))
 model.to(device)
 model.eval()
-image_path = 'data/imgs/16175.jpg'
+image_path = 'data/imgs/16175.jpg'#更改此处选择用于解释的图片
 img = Image.open(image_path).convert('RGB')
 input_image = transform(img).unsqueeze(0).to(device)
 grad_cam = GradGAM(model, model.conv3)
-cam = grad_cam.generate_cam(input_image, 5)
+cam = grad_cam.generate_cam(input_image, 5)#更改此处选择用于解释的类别0-5
 plt.imshow(cam.cpu().detach().numpy(),cmap='hot')
 plt.show()

@@ -11,7 +11,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f'Using device {device}')
 
 # 配置参数
-num_classes = 6
+num_classes = 2
 learning_rate = 0.001
 batch_size = 32
 num_epochs = 25
@@ -93,5 +93,5 @@ def train(model, train_loader, val_loader, criterion, optimizer, num_epochs):
 train(model, train_loader, val_loader, criterion, optimizer, num_epochs)
 
 # 保存模型
-torch.save(model.state_dict(), 'model2.pth')
+torch.save(model.state_dict(), 'model3.pth')
 print('Model saved to model.pth')

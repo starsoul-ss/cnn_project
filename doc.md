@@ -69,7 +69,7 @@ Epoch [6/25]: Train Loss: 1.7906, Validation Loss: 1.7923, Validation Accuracy: 
 
 train 7
 Epoch [5/25]: Train Loss: 0.0810, Validation Loss: 0.5688, Validation Accuracy: 0.8379
-没有按照imagenet的数据集参数进行归一化，模型效果反而更好
+没有按照imagenet的数据集参数进行归一化，模型效果反而更好,保存在model.pth
 Test Loss: 0.5747, Test Accuracy: 0.8397
 Confusion Matrix:
 [[467   6   6   5  12  52]
@@ -144,7 +144,7 @@ weighted avg       0.85      0.85      0.84      3407
 
 train 10
 Epoch [21/25]: Train Loss: 0.2307, Validation Loss: 0.4013, Validation Accuracy: 0.8712
-将卷积层之后的dropout删除，只保留全连接层之间的dropout，效果有改进
+将卷积层之后的dropout删除，只保留全连接层之间的dropout，效果有改进,最终结果保存在model2.pth
 Test Loss: 0.3903, Test Accuracy: 0.8694
 Confusion Matrix:
 [[459   5   7  10  18  49]
@@ -169,3 +169,84 @@ weighted avg       0.87      0.87      0.87      3407
 
 grad-cam进行决策可视化
 选择不同分类标签下的hot图，选择了200，395，757，5319，6897，16175六种
+
+
+train 11 
+去除了label为5的数据，只对剩下图片进行五分类，分辨率显著提升
+Epoch [20/25]: Train Loss: 0.1526, Validation Loss: 0.3474, Validation Accuracy: 0.8920
+Test Loss: 0.3545, Test Accuracy: 0.8949
+Confusion Matrix:
+[[516   2   9   5  16]
+ [  5 536   2   6   1]
+ [ 15   3 495  56  30]
+ [  3   3  58 503  27]
+ [ 12   2  18  26 496]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.94      0.94      0.94       548
+           1       0.98      0.97      0.98       550
+           2       0.85      0.83      0.84       599
+           3       0.84      0.85      0.85       594
+           4       0.87      0.90      0.88       554
+
+    accuracy                           0.89      2845
+   macro avg       0.90      0.90      0.90      2845
+weighted avg       0.89      0.89      0.89      2845
+
+train 12
+去除label为4和5的两类，进行四分类问题
+Epoch [21/25]: Train Loss: 0.2135, Validation Loss: 0.2475, Validation Accuracy: 0.9132
+Test Loss: 0.2539, Test Accuracy: 0.9031
+Confusion Matrix:
+[[521   5  10  12]
+ [  9 532   1   8]
+ [ 16   4 505  74]
+ [ 10   2  71 511]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.94      0.95      0.94       548
+           1       0.98      0.97      0.97       550
+           2       0.86      0.84      0.85       599
+           3       0.84      0.86      0.85       594
+
+    accuracy                           0.90      2291
+   macro avg       0.91      0.91      0.91      2291
+weighted avg       0.90      0.90      0.90      2291
+
+train 12
+进行3分类问题
+Epoch [17/25]: Train Loss: 0.0600, Validation Loss: 0.1021, Validation Accuracy: 0.9651
+Test Loss: 0.1254, Test Accuracy: 0.9641
+Confusion Matrix:
+[[524   6  18]
+ [ 11 537   2]
+ [ 20   4 575]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.94      0.96      0.95       548
+           1       0.98      0.98      0.98       550
+           2       0.97      0.96      0.96       599
+
+    accuracy                           0.96      1697
+   macro avg       0.96      0.96      0.96      1697
+weighted avg       0.96      0.96      0.96      1697
+
+train 13
+二分类问题
+Epoch [14/25]: Train Loss: 0.0429, Validation Loss: 0.0713, Validation Accuracy: 0.9775
+Test Loss: 0.0571, Test Accuracy: 0.9763
+Confusion Matrix:
+[[534  14]
+ [ 12 538]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.98      0.97      0.98       548
+           1       0.97      0.98      0.98       550
+
+    accuracy                           0.98      1098
+   macro avg       0.98      0.98      0.98      1098
+weighted avg       0.98      0.98      0.98      1098
