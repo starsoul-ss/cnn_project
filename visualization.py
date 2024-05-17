@@ -42,8 +42,9 @@ class GradGAM:
         cam = cam / cam.max()
         return cam
     
+num_classes = 6
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = CNN(num_classes=6).to(device)
+model = CNN(num_classes).to(device)
 model.load_state_dict(torch.load('model2.pth', map_location=device))
 model.to(device)
 model.eval()

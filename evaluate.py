@@ -15,7 +15,8 @@ print(f'Using device {device}')
 test_loader = create_dataloader('data/test_data.csv', 'data/imgs', batch_size=32, shuffle=False,transform=transform)
 
 # 初始化模型
-model = CNN(num_classes=2)
+num_classes =2
+model = CNN(num_classes)
 model.load_state_dict(torch.load('model3.pth'))
 model.to(device)
 
@@ -50,7 +51,7 @@ def evaluate(model, dataloader, criterion, device):
     
     # 计算混淆矩阵和分类报告
     conf_matrix = confusion_matrix(all_labels, all_predictions)
-    class_report = classification_report(all_labels, all_predictions, target_names=[str(i) for i in range(2)])
+    class_report = classification_report(all_labels, all_predictions, target_names=[str(i) for i in range(num_classes)])
 
     print("Confusion Matrix:")
     print(conf_matrix)
